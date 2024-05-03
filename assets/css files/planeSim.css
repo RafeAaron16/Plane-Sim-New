@@ -1,0 +1,281 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    font-family: 'Poppins';
+    font-weight: 700;
+}
+
+.heading{
+    display: flex;
+    justify-content: space-between;
+    background-color: #623AA2;
+    color: white;
+}
+
+body{
+    height: 100vh;
+}
+
+.lefty{
+    display: flex;
+    align-items: center;
+}
+
+.lefty p{
+    margin-top: 5px;
+    margin-left: 10px;
+    margin-right: 10px;
+    font-size: 18px;
+}
+
+.righty{
+    margin-top: 5px;
+    margin-right: 10px;
+    font-size: 18px;
+}
+
+.bod{
+    display: flex;
+    background-color: #06004A;
+    justify-content: space-between;
+
+}
+
+.leftSide, .rightSide{
+    width: 20vw;
+    background-color: #06004A;
+    height: calc(100vh - 27px);
+    overflow: scroll;
+}
+
+.leftHeadings{
+    height: 40px;
+    display: flex;
+    justify-content: space-between;
+    background-color: #00168A;
+    color: white;
+    padding-left: 30px;
+    padding-right: 30px;
+    align-items: center;
+    font-size: 16px;
+}
+
+.middle{
+    width: 59%;
+    background-color: #06004A;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.gameScreen{
+    position: relative;
+    border-radius: 5px;
+    background-color: #D6D6D6;
+    height: 96%;
+    width: 98%;
+    overflow: hidden;
+}
+
+.bets{
+    background-color: #34365B;
+    width: 90%;
+    height: 70px;
+    margin-left: 15px;
+    margin-top: 10px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+}
+
+.user{
+    margin-left: 10px;
+    width: 50px;
+    height: 50px;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 28px;
+    border-radius: 5px;
+    margin-right: 20px;
+}
+
+.info p{
+    font-size: 14px;
+    margin-bottom: 5px;
+    color: white;
+}
+
+.amount{
+    position: absolute;
+    z-index: 100;
+    display: flex;
+    background-color: white;
+    width: 110px;
+    height: 40px;
+    align-items: center;
+    font-size: 16px;
+    justify-content: space-between;
+    padding-left: 10px;
+    padding-right: 10px;
+    right: 10px;
+    top: 10px;
+    border-radius: 5px;
+    box-shadow: 0px 3px grey;
+}
+
+.betPlace{
+    width: 221px;
+    height: 162px;
+    background-color: white;
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.betAmount{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 2px solid black;
+    width: 90%;
+    height: 40px;
+    margin: auto;
+    margin-top: 10px;
+    font-size: 14px;
+    border-radius: 5px;
+}
+
+.betAmount p{
+    margin-left: 5px;
+    font-size: 16px;
+}
+
+input{
+    border: none;
+    font-size: 18px;
+    width: 50%;
+    text-align: right;
+    margin-right: 5px;
+}
+
+input:focus {
+    outline: none;
+  }
+
+.automate{
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+    margin-left: 10px;
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+
+.switch{
+    position: relative;
+    width: 60px;
+    height: 24px;
+    background-color: grey;
+    margin-left: 10px;
+    border-radius: 5px;
+}
+
+.toggle{
+    opacity: 0.9;
+    background-color: #623AA2;
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    top: -2px;
+    border-radius: 5px;
+}
+
+.toggle:hover{
+    opacity: 1.0;
+    cursor: pointer;
+}
+
+.placeBet{
+    opacity: 0.9;
+    width: 200px;
+    height: 40px;
+    margin: auto;
+    border: none;
+    background-color: #FF8181;
+    font-size: 20px;
+    border-radius: 5px;
+}
+
+.placeBet:hover{
+    opacity: 1.0;
+    cursor: pointer;
+}
+
+.plane{
+    width: 100%;
+    height: 100%;
+}
+
+.aeroplane{
+    transition: all 2s;
+    position: absolute;
+    left: 44%;
+    bottom: 10px;
+}
+
+.headingChat{
+    text-align: center;
+    margin-top: 20px;
+    font-size: 20px;
+    color: white;
+}
+
+.chatBody{
+    color: white;
+    text-align: center;
+    font-size: 16px;
+    margin-top: calc(100%);
+}
+
+.middleInfo{
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.middleInfo p{
+    font-size: 24px;
+    margin-top: 20px;
+}
+
+.loadingBar{
+    margin-top: 20px;
+    width: 100%;
+    height: 10px;
+    border-radius: 5px;
+    background-color: white;
+    opacity: 0.5;
+}
+
+.loader{
+    background-color: red;
+    width: 80%;
+    height: 10px;
+    border-radius: 5px;
+    transition: all 5s;
+}
+
+#mybetnumber, #betNumber{
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+#mybetnumber:hover, #betNumber:hover{
+    opacity: 1;
+}

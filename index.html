@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plane Sim</title>
+    <link rel="icon" href="./assets/images/Aeroplane-256 (1).png" type="image/x-icon">
+    <link rel="stylesheet" href="./assets/css files/planeSim.css">
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+    <script src="./assets/jsfiles/money.js" defer></script>
+</head>
+<body>
+    <div class="heading">
+        <div class="lefty">
+            <p>Plane Sim</p>
+            <img width="20px" height="20px" src="./assets/images/Aeroplane-256 (1).png" alt="Plane Image">
+        </div>
+
+        <div class="righty">
+            <p>Made by Rafe Aaron Industries</p>
+        </div>
+    </div>
+    
+    <div class="bod">
+        <div class="leftSide">
+            <div class="leftHeadings">
+                <p id="betNumber">All Bets(0)</p>
+                <p id="mybetnumber">My Bets(0)</p>
+            </div>
+
+            <div class="listings">
+                <ul class="listing" id="listing">
+                    
+                </ul>
+            </div>
+        </div>
+
+        <div class="middle">
+            <div class="gameScreen">
+
+                <div class="amount">
+                    <p>UGX</p>
+                    <p id="cashRemaining">154600</p>
+                </div>
+
+                <div class="middleInfo">
+                    <div class="middlestuff">
+                        <img id="piloting" width="200px" height="200px" src="./assets/images/pilot.png" alt="Pilot Image">
+                        <p id="Major_Text">Get Ready For Flight</p>
+                        <div class="loadingBar" id="loadingBar">
+                            <div class="loader" id="loader">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="plane">
+                    <img id="aeroplanepng" class="aeroplane" width="150px" height="150px" src="./assets/images/airplane (1).png" alt="Plane flying on screen">
+                </div>
+
+                <div class="betPlace">
+                    <div class="betAmount">
+                        <p>Amount(UGX)</p>
+                        <input type="numeric" id="bet">
+                    </div>
+
+                    <div class="automate">
+                        <p>Automatic</p>
+                        <div class="switch" id="switch">
+                            <div class="toggle" id="toggle"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="placeBet">
+                        <button class="placeBet" id="betbtn">Place Bet</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="rightSide">
+            <div class="headingChat">
+                <p>Chats</p>
+            </div>
+
+            <div class="chatBody">
+                <p>In development</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
