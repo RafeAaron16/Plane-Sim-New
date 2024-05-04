@@ -17,7 +17,7 @@
 
         $json = file_get_contents('php://input');
 
-        $data = json_decode($json);
+        $data = json_decode($json);      
 
     $centertext = "Get Ready For Flight\n\n";
 
@@ -84,6 +84,29 @@
             
         }
 
+        if($data->intention == "add to amount remaining"){
+
+            $sql1 = "SELECT AMOUNT FROM user where Name = '".$data->username ."';";
+
+            $result1 = mysqli_query($conn, $sql1) or die(mysqli_error());
+
+            if(mysqli_num_rows($result1) > 0){
+                $record = mysqli_fetch_assoc($result1);
+            }
+
+            $sql = "UPDATE user SET AMOUNT = ".$data->AmountToAdd." where Name = '".$data->username ."';";
+
+            $result = mysqli_query($conn, $sql) or die(mysqli_error());
+
+            if($result == TRUE){
+                echo "Success";
+            }else{
+                echo "Failure";
+            }
+
+            
+        }
+
     
 
     if($data->intention == "retrieve current bets"){
@@ -106,6 +129,23 @@
             header("Content-Type: application/json;charset=utf-8");
             echo json_encode($records);
 
+        }
+
+        else{
+            echo json_encode(["message", "No bets present"]);
+        }
+    }
+
+    if($data->intention == "start again"){
+
+        $sql = "DELETE FROM mybets;";
+
+        $result = mysqli_query($conn, $sql) or die(mysqli_error());
+
+        if($result == true){
+            echo "Success";
+        }else{
+            echo "Failure";
         }
     }
 

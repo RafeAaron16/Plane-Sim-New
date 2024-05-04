@@ -10,7 +10,40 @@ function getRemainingMoney(username){
             console.log(value)
         })
 }
+
+var amountToAdd = 0;
 var automatic = 0;
+insession = 0;
+var betplaced = 0;
+var bet = 0;
+var cashedOut = 0;
+
+document.getElementById('betbtn').addEventListener('click', ()=>{
+
+    if(insession == 0 && betplaced == 0){
+        placeBet("Rafe Aaron");
+    }
+
+    if(insession == 0 && betplaced == 1){
+        alert("Bet Already placed");
+    }
+
+    if(insession == 1 && betplaced == 0){
+        alert("Wait for the next round");
+    }
+
+    if(amountToAdd > 0 && insession == 1 && betplaced == 1 && cashedOut == 0){
+        addToRemainingMoney("Rafe Aaron");
+    }
+
+    if(amountToAdd > 0 && insession == 1 && cashedOut == 1){
+        alert("Bet Already Cashed Out");
+    }
+
+    
+})
+
+
 
 document.getElementById('toggle').addEventListener('click', ()=>{
 
@@ -24,12 +57,6 @@ document.getElementById('toggle').addEventListener('click', ()=>{
         document.getElementById('toggle').style.right = '0%'
         automatic = 1;
     }
-
-    console.log(automatic);
-})
-
-document.getElementById('betbtn').addEventListener('click', ()=>{
-    placeBet("Rafe Aaron")
 })
 
 function placeBet(username){
@@ -50,6 +77,11 @@ function placeBet(username){
         if(value == "Success"){
             document.getElementById('cashRemaining').innerHTML = getRemainingMoney("Rafe Aaron");
             reduceRemainingMoney('Rafe Aaron');
+            betplaced = 1;
+
+            bet = document.getElementById('bet').value;
+
+            alert("Bet placed: " + bet);
         }
 
         if(value == "Failure"){
@@ -87,6 +119,29 @@ function reduceRemainingMoney(username){
 }
 }
 
+function addToRemainingMoney(username){
+
+    fetch('http://localhost:4000/server.php', {method: 'POST', headers:{'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers':'Content-Type'}, body:JSON.stringify({'AmountToAdd': (Number(document.getElementById('cashRemaining').innerHTML) + Number(amountToAdd)).toString(),'intention': 'add to amount remaining', 'username': username})}).
+    then((response) => {
+        
+        return response.text()}).
+    then((value) => {
+
+        if(value == "Success"){
+            alert("Bet Cashed Out")
+            document.getElementById('cashRemaining').innerHTML = getRemainingMoney("Rafe Aaron");
+        }
+
+        if(value == "Failure"){
+            alert("Failed to update amount");
+        }
+        console.log(value)
+    }).catch((error) =>{
+        alert("There was an error cashing out place the bet")
+    })
+}
+
+
 getRemainingMoney("Rafe Aaron");
 
 function getMyBets(username){
@@ -95,6 +150,13 @@ function getMyBets(username){
         
         return response.json()}).
     then((value) => {
+
+        document.getElementById('mybetnumber').style.opacity = '1'
+        document.getElementById('betNumber').style.opacity = '0.7'
+
+        console.log(value);
+
+        if(value[0] != "message"){
 
         number = 0
 
@@ -147,7 +209,12 @@ function getMyBets(username){
             document.getElementById('mybetnumber').innerHTML = "My Bets("+ number+")";
             }
         }
-    })
+        
+    }
+    else{
+        console.log("No new bets");
+    }
+})
 }
 
 function getAllBets(){
@@ -159,11 +226,17 @@ function getAllBets(){
         return response.json()}).
     then((value) => {
 
+        document.getElementById('mybetnumber').style.opacity = '0.7'
+        document.getElementById('betNumber').style.opacity = '1'
+
+        if(value[0] != "message"){
         number_of_elements = document.getElementById('listing').childElementCount;
 
         for(let i = number_of_elements; i > 0; i--){
             document.getElementById('listing').removeChild(document.getElementById('listing').firstChild)
         }
+
+        console.log(value.length);
 
         document.getElementById('betNumber').innerHTML = "All Bets("+ value.length+")";
 
@@ -200,6 +273,9 @@ function getAllBets(){
 
             document.getElementById('listing').appendChild(listItem);
         }
+    }else{
+        console.log("No new bets");
+    }
     })
 }
 
@@ -217,8 +293,6 @@ document.getElementById('mybetnumber').addEventListener('click', ()=>{
     getMyBets("Rafe Aaron");
 })
 
-getMyBets("Rafe Aaron");
-getAllBets();
 
 startingTime = 0;
 endingTime = 0;
@@ -247,8 +321,8 @@ async function getState(){
         seconds = value;
     });
 
-    coordinatesBottom = ["1%", "80%", "50%", '70%',  "70%", '100%']
-    coordinatesLeft = ["44%", "44%", "75%", "70%", "30%", "44%"]
+    coordinatesBottom = ["1%", "80%", "50%", '70%',  "70%"]
+    coordinatesLeft = ["44%", "44%", "75%", "70%", "30%"]
 
     currenttime = new Date().getTime();
 
@@ -258,10 +332,14 @@ async function getState(){
 
     setTimeout(() =>{
 
-        document.getElementById("Major_Text").innerHTML = "Please wait for the next round in 15 minutes";
+        document.getElementById("Major_Text").innerHTML = "Please wait for the next round in 15 seconds";
 
             setInterval(() => {
                 setTimeout(() => {
+                    insession = 0;
+
+                    document.getElementById("aeroplanepng").style.left = "44%";
+                    document.getElementById("aeroplanepng").style.bottom = "1%";
                     document.getElementById("aeroplanepng").style.transition = 'all 2s';
                     document.getElementById("Major_Text").innerHTML = "Get ready For Flight";
                     document.getElementById("loader").style.width = "0%";
@@ -275,7 +353,20 @@ async function getState(){
 
                 }, 0);
 
-                setTimeout(() => {
+                setTimeout(async () => {
+
+                    insession = 1;
+
+                    document.getElementById('betbtn').style.backgroundColor = "grey"
+
+                    await fetch("http://localhost:4001/getseconds", {method: 'GET', headers:{'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers':'Content-Type'}}).
+                        then((response) => response.text()).then((value) => {
+                            console.log(value);
+
+                            seconds = value;
+                        });
+
+                        currenttime = new Date().getTime();
                     
                     document.getElementById("Major_Text").innerHTML = "";
                     document.getElementById("piloting").style.width = "0px";
@@ -284,32 +375,73 @@ async function getState(){
 
                     for(let i = 0; i < coordinatesBottom.length; i++){
                         setTimeout(() => {
-                        document.getElementById("aeroplanepng").style.left = coordinatesLeft[i];
-                        document.getElementById("aeroplanepng").style.bottom = coordinatesBottom[i];
-                        }, (5000/coordinatesBottom.length) * i);
+                            document.getElementById("aeroplanepng").style.left = coordinatesLeft[i];
+                            document.getElementById("aeroplanepng").style.bottom = coordinatesBottom[i];
+                        }, (Number(seconds)/coordinatesBottom.length) * i);
 
                     }
 
+                    getMyBets("Rafe Aaron");
                     getAllBets();
-                    getMyBets("Rafe Aaron")
 
-                }, 5000);
+                    if(betplaced == 1){
+                        document.getElementById('betbtn').style.backgroundColor = "green"
+                    }
+
+                    for(let i = 0; i < Number(seconds); i++){
+
+                        setTimeout(() => {
+
+                            number1 = 1 + Math.round(1 + i/10)/100
+                            
+                            document.getElementById("Major_Text").innerHTML = "x" + number1;
+
+                            document.getElementById('betbtn').innerHTML = "Check Out " + bet * number1;
+                            amountToAdd = bet * (1 + Math.round(1 + i/10)/100);
+
+                            if(i == Number(seconds) - 1){
+                                document.getElementById("aeroplanepng").style.left = "44%";
+                                document.getElementById("aeroplanepng").style.bottom = "1000%";
+
+                                insession = 0;
+
+                                document.getElementById('betbtn').style.backgroundColor = "#FF8181"
+                                document.getElementById('betbtn').innerHTML = "Place Bet"
+                                }
+                        }, i)
+                    }
+
+                }, Number(seconds));
 
                 setTimeout(() => {
+
                     document.getElementById("loadingBar").style.width = "100%";
-                    document.getElementById("Major_Text").innerHTML = "The Plane Flew Away";
+                    document.getElementById("Major_Text").innerHTML = "We Lost The Plane";
                     document.getElementById("piloting").style.width = "200px";
                     document.getElementById("piloting").style.height = "200px";
                     document.getElementById("loader").style.width = "100%";
 
                     document.getElementById("aeroplanepng").style.transition = 'all 0s';
-                    document.getElementById("aeroplanepng").style.left = coordinatesLeft[0];
-                    document.getElementById("aeroplanepng").style.bottom = coordinatesBottom[0];
+
+                    document.getElementById("aeroplanepng").style.left = "44%";
+                                document.getElementById("aeroplanepng").style.bottom = "1%";
+                                betplaced = 0;
+                                insession = 0;
+
+                    fetch("http://localhost:4000/server.php", {method: 'POST', headers:{'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers':'Content-Type'}, body: JSON.stringify({'intention': 'start again'})}).
+                        then((response) => response.text()).then((value) => {
+                            if(value == "Success"){
+                            console.log("Starting afresh");
+                            getAllBets();
+                            getMyBets("Rafe Aaron")
+                            }else{
+                                console.log("Failed to start afresh");
+                            }
+                        });
 
                 }, 10000);
             }, 15000);
         }, startingTimer());
-
 
 }
 

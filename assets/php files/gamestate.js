@@ -12,7 +12,7 @@ http.createServer((req, res) => {
     res.writeHead(200, {'access-control-allow-origin': '*', 'Content-Type': 'application/json', 'access-control-allow-headers':'*'})
 
     if(req.url == "/getseconds"){
-    res.write( ((5000 - number)/1000).toString());
+    res.write( ((5000 - number)).toString());
     res.end()
     }
 
