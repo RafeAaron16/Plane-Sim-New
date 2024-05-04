@@ -1,13 +1,16 @@
+let x = document.cookie;
+
+x = "Rafe Aaron"
+
+console.log(x);
+
 function getRemainingMoney(username){
-        fetch('http://localhost:4000/server.php', {method: 'POST', headers:{'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers':'Content-Type'}, body:JSON.stringify({'intention': 'get amount remaining', 'username': username})}).
-        then((response) => { 
-            
-            console.log(response)
+        fetch('http://localhost:4000/server.php', {method: 'POST', headers:{'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers':'Content-Type'}, body:JSON.stringify({'intention': 'get amount remaining', 'username': x})}).
+        then((response) => {
             
             return response.text()}).
         then((value) => {
             document.getElementById('cashRemaining').innerHTML = value;
-            console.log(value)
         })
 }
 
@@ -21,7 +24,7 @@ var cashedOut = 0;
 document.getElementById('betbtn').addEventListener('click', ()=>{
 
     if(insession == 0 && betplaced == 0){
-        placeBet("Rafe Aaron");
+        placeBet(x);
     }
 
     if(insession == 0 && betplaced == 1){
@@ -33,7 +36,7 @@ document.getElementById('betbtn').addEventListener('click', ()=>{
     }
 
     if(amountToAdd > 0 && insession == 1 && betplaced == 1 && cashedOut == 0){
-        addToRemainingMoney("Rafe Aaron");
+        addToRemainingMoney(x);
     }
 
     if(amountToAdd > 0 && insession == 1 && cashedOut == 1){
@@ -64,19 +67,18 @@ function placeBet(username){
         alert("Please increase bet amount");
     }else if(document.getElementById('bet').value > Number(document.getElementById('cashRemaining').innerHTML)){
 
-        console.log(Number(document.getElementById('cashRemaining').innerHTML))
         alert("Insufficient Funds. Balance: " + (document.getElementById('bet').value - Number(document.getElementById('cashRemaining').innerHTML)));
     }
     else{
-    fetch('http://localhost:4000/server.php', {method: 'POST', headers:{'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers':'Content-Type'}, body:JSON.stringify({'betAmount': document.getElementById('bet').value,'intention': 'place bet', 'username': username})}).
+    fetch('http://localhost:4000/server.php', {method: 'POST', headers:{'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers':'Content-Type'}, body:JSON.stringify({'betAmount': document.getElementById('bet').value,'intention': 'place bet', 'username': x})}).
     then((response) => {
         
         return response.text()}).
     then((value) => {
 
         if(value == "Success"){
-            document.getElementById('cashRemaining').innerHTML = getRemainingMoney("Rafe Aaron");
-            reduceRemainingMoney('Rafe Aaron');
+            document.getElementById('cashRemaining').innerHTML = getRemainingMoney(x);
+            reduceRemainingMoney(x);
             betplaced = 1;
 
             bet = document.getElementById('bet').value;
@@ -87,7 +89,6 @@ function placeBet(username){
         if(value == "Failure"){
             alert("Failed to update amount");
         }
-        console.log(value)
     }).catch((error) =>{
         alert("There was an error trying to place the bet")
     })
@@ -99,20 +100,19 @@ function reduceRemainingMoney(username){
     if(document.getElementById('bet').value <= 0){
         alert("Please increase bet amount");
     }else{
-    fetch('http://localhost:4000/server.php', {method: 'POST', headers:{'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers':'Content-Type'}, body:JSON.stringify({'betAmount': document.getElementById('bet').value,'intention': 'reduce amount remaining', 'username': username})}).
+    fetch('http://localhost:4000/server.php', {method: 'POST', headers:{'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers':'Content-Type'}, body:JSON.stringify({'betAmount': document.getElementById('bet').value,'intention': 'reduce amount remaining', 'username': x})}).
     then((response) => {
         
         return response.text()}).
     then((value) => {
 
         if(value == "Success"){
-            document.getElementById('cashRemaining').innerHTML = getRemainingMoney("Rafe Aaron");
+            document.getElementById('cashRemaining').innerHTML = getRemainingMoney(x);
         }
 
         if(value == "Failure"){
             alert("Failed to update amount");
         }
-        console.log(value)
     }).catch((error) =>{
         alert("There was an error trying to place the bet")
     })
@@ -121,7 +121,7 @@ function reduceRemainingMoney(username){
 
 function addToRemainingMoney(username){
 
-    fetch('http://localhost:4000/server.php', {method: 'POST', headers:{'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers':'Content-Type'}, body:JSON.stringify({'AmountToAdd': (Number(document.getElementById('cashRemaining').innerHTML) + Number(amountToAdd)).toString(),'intention': 'add to amount remaining', 'username': username})}).
+    fetch('http://localhost:4000/server.php', {method: 'POST', headers:{'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers':'Content-Type'}, body:JSON.stringify({'AmountToAdd': (Number(document.getElementById('cashRemaining').innerHTML) + Number(amountToAdd)).toString(),'intention': 'add to amount remaining', 'username': x})}).
     then((response) => {
         
         return response.text()}).
@@ -129,20 +129,19 @@ function addToRemainingMoney(username){
 
         if(value == "Success"){
             alert("Bet Cashed Out")
-            document.getElementById('cashRemaining').innerHTML = getRemainingMoney("Rafe Aaron");
+            document.getElementById('cashRemaining').innerHTML = getRemainingMoney(x);
         }
 
         if(value == "Failure"){
             alert("Failed to update amount");
         }
-        console.log(value)
     }).catch((error) =>{
         alert("There was an error cashing out place the bet")
     })
 }
 
 
-getRemainingMoney("Rafe Aaron");
+getRemainingMoney(x);
 
 function getMyBets(username){
     fetch('http://localhost:4000/server.php', {method: 'POST', headers:{'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers':'Content-Type'}, body:JSON.stringify({'intention': 'retrieve my current bets'})}).
@@ -153,8 +152,6 @@ function getMyBets(username){
 
         document.getElementById('mybetnumber').style.opacity = '1'
         document.getElementById('betNumber').style.opacity = '0.7'
-
-        console.log("My Bets responding: " + value);
 
         number = 0
 
@@ -169,7 +166,7 @@ function getMyBets(username){
 
         for(let i = 0; i < value.length; i++){
 
-            if(value[i].Name == username){
+            if(value[i].Name == x){
                 number++;
 
             betDiv = document.createElement('div')
@@ -210,7 +207,6 @@ function getMyBets(username){
         
     }
     else{
-        console.log("No new bets");
         document.getElementById('mybetnumber').innerHTML = "All Bets(0)";
     }
 })
@@ -219,9 +215,7 @@ function getMyBets(username){
 function getAllBets(){
     fetch('http://localhost:4000/server.php', {method: 'POST', headers:{'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers':'Content-Type'}, body:JSON.stringify({'intention': 'retrieve current bets'})}).
     then((response) => { 
-        
-        console.log(response)
-        
+
         return response.json()}).
     then((value) => {
 
@@ -274,7 +268,6 @@ function getAllBets(){
             document.getElementById('listing').appendChild(listItem);
         }
     }else{
-        console.log("No new bets");
         document.getElementById('betNumber').innerHTML = "All Bets(0)";
     }
     })
@@ -291,7 +284,7 @@ document.getElementById('betNumber').addEventListener('click', ()=>{
 document.getElementById('mybetnumber').addEventListener('click', ()=>{
     document.getElementById('mybetnumber').style.opacity = '1'
     document.getElementById('betNumber').style.opacity = '0.7'
-    getMyBets("Rafe Aaron");
+    getMyBets(x);
 })
 
 
@@ -303,21 +296,17 @@ seconds = 0;
 async function getState(){
     await fetch("http://localhost:4001/getStartingTime", {method: 'GET', headers:{'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers':'Content-Type'}}).
     then((response) => response.text()).then((value) => {
-        console.log(value);
 
         startingTime = value;
     });
 
     await fetch("http://localhost:4001/getEndingTime", {method: 'GET', headers:{'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers':'Content-Type'}}).
     then((response) => response.text()).then((value) => {
-        console.log(value);
-
         endingTime = value;
     });
 
     await fetch("http://localhost:4001/getseconds", {method: 'GET', headers:{'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers':'Content-Type'}}).
     then((response) => response.text()).then((value) => {
-        console.log(value);
 
         seconds = value;
     });
@@ -326,8 +315,6 @@ async function getState(){
     coordinatesLeft = ["44%", "44%", "75%", "70%", "30%"]
 
     currenttime = new Date().getTime();
-
-    console.log(newstartingTime);
 
     document.getElementById("Major_Text").innerHTML = "Syncing with server";
 
@@ -349,7 +336,7 @@ async function getState(){
                     document.getElementById("piloting").style.height = "200px";
 
                     if(automatic == 1){
-                        placeBet("Rafe Aaron");
+                        placeBet(x);
                     }
 
                 }, 0);
@@ -362,7 +349,6 @@ async function getState(){
 
                     await fetch("http://localhost:4001/getseconds", {method: 'GET', headers:{'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers':'Content-Type'}}).
                         then((response) => response.text()).then((value) => {
-                            console.log(value);
 
                             seconds = value;
                         });
@@ -383,7 +369,7 @@ async function getState(){
                     }
 
                     getAllBets();
-                    getMyBets("Rafe Aaron");
+                    getMyBets(x);
 
                     if(betplaced == 1){
                         document.getElementById('betbtn').style.backgroundColor = "green"
@@ -433,11 +419,10 @@ async function getState(){
                     fetch("http://localhost:4000/server.php", {method: 'POST', headers:{'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers':'Content-Type'}, body: JSON.stringify({'intention': 'start again'})}).
                         then((response) => response.text()).then(async (value) => {
                             if(value == "Success"){
-                            console.log("Starting afresh");
                             betplaced = 0;
                             
                             }else{
-                                console.log("Failed to start afresh");
+                                alert("Error refreshing bets");
                             }
                         });
 
@@ -449,7 +434,6 @@ async function getState(){
 
 function startingTimer(){
     newstartingTime = Number(endingTime) - currenttime;
-    console.log(newstartingTime);
     return newstartingTime;
 }
 
