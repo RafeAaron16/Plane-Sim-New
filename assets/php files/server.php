@@ -111,6 +111,33 @@
 
     if($data->intention == "retrieve current bets"){
 
+        $sql = "SELECT * FROM currentbets;";
+
+        $number = 0;
+
+        $result = mysqli_query($conn, $sql) or die(mysqli_error());
+
+        $records = []; 
+
+        if(mysqli_num_rows($result) > 0){
+            while($record = mysqli_fetch_assoc($result)){
+                $records[] = $record;
+                $number++;
+            }
+            
+
+            header("Content-Type: application/json;charset=utf-8");
+            echo json_encode($records);
+
+        }
+
+        else{
+            echo json_encode(["message", "No bets present"]);
+        }
+    }
+
+    if($data->intention == "retrieve my current bets"){
+
         $sql = "SELECT * FROM mybets;";
 
         $number = 0;
@@ -138,7 +165,7 @@
 
     if($data->intention == "start again"){
 
-        $sql = "DELETE FROM mybets;";
+        $sql = "DELETE FROM currentbets;";
 
         $result = mysqli_query($conn, $sql) or die(mysqli_error());
 

@@ -145,7 +145,7 @@ function addToRemainingMoney(username){
 getRemainingMoney("Rafe Aaron");
 
 function getMyBets(username){
-    fetch('http://localhost:4000/server.php', {method: 'POST', headers:{'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers':'Content-Type'}, body:JSON.stringify({'intention': 'retrieve current bets'})}).
+    fetch('http://localhost:4000/server.php', {method: 'POST', headers:{'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers':'Content-Type'}, body:JSON.stringify({'intention': 'retrieve my current bets'})}).
     then((response) => { 
         
         return response.json()}).
@@ -154,9 +154,7 @@ function getMyBets(username){
         document.getElementById('mybetnumber').style.opacity = '1'
         document.getElementById('betNumber').style.opacity = '0.7'
 
-        console.log(value);
-
-        if(value[0] != "message"){
+        console.log("My Bets responding: " + value);
 
         number = 0
 
@@ -167,7 +165,7 @@ function getMyBets(username){
             document.getElementById('listing').removeChild(document.getElementById('listing').firstChild)
         }
 
-        
+        if(value[0] != "message"){        
 
         for(let i = 0; i < value.length; i++){
 
@@ -213,6 +211,7 @@ function getMyBets(username){
     }
     else{
         console.log("No new bets");
+        document.getElementById('mybetnumber').innerHTML = "All Bets(0)";
     }
 })
 }
@@ -229,16 +228,17 @@ function getAllBets(){
         document.getElementById('mybetnumber').style.opacity = '0.7'
         document.getElementById('betNumber').style.opacity = '1'
 
-        if(value[0] != "message"){
         number_of_elements = document.getElementById('listing').childElementCount;
 
         for(let i = number_of_elements; i > 0; i--){
             document.getElementById('listing').removeChild(document.getElementById('listing').firstChild)
         }
 
-        console.log(value.length);
+        if(value[0] != "message"){
 
-        document.getElementById('betNumber').innerHTML = "All Bets("+ value.length+")";
+        document.getElementById('betNumber').innerHTML = "All Bets("+ value.length +")";
+
+
 
         for(let i = 0; i < value.length; i++){
 
@@ -275,6 +275,7 @@ function getAllBets(){
         }
     }else{
         console.log("No new bets");
+        document.getElementById('betNumber').innerHTML = "All Bets(0)";
     }
     })
 }
@@ -381,8 +382,8 @@ async function getState(){
 
                     }
 
-                    getMyBets("Rafe Aaron");
                     getAllBets();
+                    getMyBets("Rafe Aaron");
 
                     if(betplaced == 1){
                         document.getElementById('betbtn').style.backgroundColor = "green"
@@ -392,21 +393,18 @@ async function getState(){
 
                         setTimeout(() => {
 
-                            number1 = 1 + Math.round(1 + i/10)/100
+                            number1 = 1 + ((i- (i%10))/1000)
                             
                             document.getElementById("Major_Text").innerHTML = "x" + number1;
 
                             document.getElementById('betbtn').innerHTML = "Check Out " + bet * number1;
-                            amountToAdd = bet * (1 + Math.round(1 + i/10)/100);
+                            amountToAdd = bet * number1;
 
                             if(i == Number(seconds) - 1){
                                 document.getElementById("aeroplanepng").style.left = "44%";
                                 document.getElementById("aeroplanepng").style.bottom = "1000%";
 
-                                insession = 0;
-
-                                document.getElementById('betbtn').style.backgroundColor = "#FF8181"
-                                document.getElementById('betbtn').innerHTML = "Place Bet"
+                                insession = 1;
                                 }
                         }, i)
                     }
@@ -414,6 +412,12 @@ async function getState(){
                 }, Number(seconds));
 
                 setTimeout(() => {
+
+                    insession = 0;
+                    bet = 0;
+
+                    document.getElementById('betbtn').style.backgroundColor = "#FF8181"
+                                document.getElementById('betbtn').innerHTML = "Place Bet"
 
                     document.getElementById("loadingBar").style.width = "100%";
                     document.getElementById("Major_Text").innerHTML = "We Lost The Plane";
@@ -425,15 +429,13 @@ async function getState(){
 
                     document.getElementById("aeroplanepng").style.left = "44%";
                                 document.getElementById("aeroplanepng").style.bottom = "1%";
-                                betplaced = 0;
-                                insession = 0;
 
                     fetch("http://localhost:4000/server.php", {method: 'POST', headers:{'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers':'Content-Type'}, body: JSON.stringify({'intention': 'start again'})}).
-                        then((response) => response.text()).then((value) => {
+                        then((response) => response.text()).then(async (value) => {
                             if(value == "Success"){
                             console.log("Starting afresh");
-                            getAllBets();
-                            getMyBets("Rafe Aaron")
+                            betplaced = 0;
+                            
                             }else{
                                 console.log("Failed to start afresh");
                             }
