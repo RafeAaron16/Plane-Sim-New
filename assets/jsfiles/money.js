@@ -1,6 +1,6 @@
 let x = document.cookie;
 
-x = "Rafe Aaron"
+if(x == "") {x = "Rafe Aaron"}
 
 console.log(x);
 
