@@ -1,11 +1,10 @@
 let x = document.cookie;
 
-if(x == "") {x = "Rafe Aaron"}
-
+if(document.cookie.includes("abuse_interstitial=8bf2-41-75-174-193.ngrok-free.app;")) {x= document.cookie.substring(document.cookie.indexOf(';') + 2)}
 console.log(x);
 
 function getRemainingMoney(username){
-        fetch('http://localhost:4000/assets/php files/server.php', {method: 'POST', headers:{'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers':'Content-Type'}, body:JSON.stringify({'intention': 'get amount remaining', 'username': x})}).
+        fetch('https://8bf2-41-75-174-193.ngrok-free.app/assets/php files/server.php', {method: 'POST', headers:{'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers':'Content-Type'}, body:JSON.stringify({'intention': 'get amount remaining', 'username': x})}).
         then((response) => {
             
             return response.text()}).
@@ -70,7 +69,7 @@ function placeBet(username){
         alert("Insufficient Funds. Balance: " + (document.getElementById('bet').value - Number(document.getElementById('cashRemaining').innerHTML)));
     }
     else{
-    fetch('http://localhost:4000/assets/php files/server.php', {method: 'POST', headers:{'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers':'Content-Type'}, body:JSON.stringify({'betAmount': document.getElementById('bet').value,'intention': 'place bet', 'username': username})}).
+    fetch('https://8bf2-41-75-174-193.ngrok-free.app/assets/php files/server.php', {method: 'POST', headers:{'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers':'Content-Type'}, body:JSON.stringify({'betAmount': document.getElementById('bet').value,'intention': 'place bet', 'username': username})}).
     then((response) => {
         
         return response.text()}).
@@ -100,7 +99,7 @@ function reduceRemainingMoney(username){
     if(document.getElementById('bet').value <= 0){
         alert("Please increase bet amount");
     }else{
-    fetch('http://localhost:4000/assets/php files/server.php', {method: 'POST', headers:{'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers':'Content-Type'}, body:JSON.stringify({'betAmount': document.getElementById('bet').value,'intention': 'reduce amount remaining', 'username': username})}).
+    fetch('https://8bf2-41-75-174-193.ngrok-free.app/assets/php files/server.php', {method: 'POST', headers:{'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers':'Content-Type'}, body:JSON.stringify({'betAmount': document.getElementById('bet').value,'intention': 'reduce amount remaining', 'username': username})}).
     then((response) => {
         
         return response.text()}).
@@ -121,7 +120,7 @@ function reduceRemainingMoney(username){
 
 function addToRemainingMoney(username){
 
-    fetch('http://localhost:4000/assets/php files/server.php', {method: 'POST', headers:{'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers':'Content-Type'}, body:JSON.stringify({'AmountToAdd': (Number(document.getElementById('cashRemaining').innerHTML) + Number(amountToAdd)).toString(),'intention': 'add to amount remaining', 'username': username})}).
+    fetch('https://8bf2-41-75-174-193.ngrok-free.app/assets/php files/server.php', {method: 'POST', headers:{'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers':'Content-Type'}, body:JSON.stringify({'AmountToAdd': (Number(document.getElementById('cashRemaining').innerHTML) + Number(amountToAdd)).toString(),'intention': 'add to amount remaining', 'username': username})}).
     then((response) => {
         
         return response.text()}).
@@ -144,7 +143,7 @@ function addToRemainingMoney(username){
 getRemainingMoney(x);
 
 function getMyBets(username){
-    fetch('http://localhost:4000/assets/php files/server.php', {method: 'POST', headers:{'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers':'Content-Type'}, body:JSON.stringify({'intention': 'retrieve my current bets'})}).
+    fetch('https://8bf2-41-75-174-193.ngrok-free.app/assets/php files/server.php', {method: 'POST', headers:{'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers':'Content-Type'}, body:JSON.stringify({'intention': 'retrieve my current bets'})}).
     then((response) => { 
         
         return response.json()}).
@@ -213,13 +212,11 @@ function getMyBets(username){
 }
 
 function getAllBets(){
-    fetch('http://localhost:4000/assets/php files/server.php', {method: 'POST', headers:{'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers':'Content-Type'}, body:JSON.stringify({'intention': 'retrieve current bets'})}).
+    fetch('https://8bf2-41-75-174-193.ngrok-free.app/assets/php files/server.php', {method: 'POST', headers:{'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers':'Content-Type'}, body:JSON.stringify({'intention': 'retrieve current bets'})}).
     then((response) => { 
 
         return response.json()}).
     then((value) => {
-
-        console.log(value);
 
         document.getElementById('mybetnumber').style.opacity = '0.7'
         document.getElementById('betNumber').style.opacity = '1'
@@ -299,26 +296,23 @@ synced = 0;
 baseTime = 0;
 
 async function getState(){
-    await fetch("http://localhost:4001/getStartingTime", {method: 'GET', headers:{'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers':'Content-Type', 'ngrok-skip-browser-warning':'69420'}}).
+    await fetch("https://5bf9-41-75-174-193.ngrok-free.app/getStartingTime", {method: 'GET', headers:{'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers':'Content-Type', 'ngrok-skip-browser-warning':'69420'}}).
     then((response) => response.text()).then((value) => {
 
         startingTime = value;
     });
 
-    await fetch("http://localhost:4001/getEndingTime", {method: 'GET', headers:{'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers':'Content-Type', 'ngrok-skip-browser-warning':'69420'}}).
+    await fetch("https://5bf9-41-75-174-193.ngrok-free.app/getEndingTime", {method: 'GET', headers:{'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers':'Content-Type', 'ngrok-skip-browser-warning':'69420'}}).
     then((response) => response.text()).then((value) => {
         endingTime = value;
     });
 
-    await fetch("http://localhost:4001/getseconds", {method: 'GET', headers:{'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers':'Content-Type', 'ngrok-skip-browser-warning':'69420'}}).
+    await fetch("https://5bf9-41-75-174-193.ngrok-free.app/getseconds", {method: 'GET', headers:{'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers':'Content-Type', 'ngrok-skip-browser-warning':'69420'}}).
     then((response) => response.text()).then((value) => {
 
         seconds = value;
+        
     });
-
-    currenttime = new Date().getTime();
-
-    console.log("Starting at: " + startingTime);
 
     if(synced == 0){
         document.getElementById("Major_Text").innerHTML = "Syncing with server";
@@ -330,29 +324,32 @@ async function getState(){
                 
                 transformComponents();
                 synced = 1;
-            }, startingTimer());
+            }, 4000);
 
             
         
             }else{
-                console.log("Already synced");
                 transformComponents();
             }
 
    
 
-    console.log("We shall start drawing after: " + startingTimer())
 }
 
+getState()
 
 
 function startingTimer(){
+
+    if(Number(endingTime) < new Date().getTime()){
+
+    }
+
     newstartingTime = Number(endingTime) - new Date().getTime();
+    console.log(Number(endingTime) - new Date().getTime())
     return newstartingTime;
 }
 
-getState();
-console.log("I'm calling getState as well")
 
 coordinatesBottom = ["1%", "80%", "50%", '70%',  "70%"]
 coordinatesLeft = ["44%", "44%", "75%", "70%", "30%"]
@@ -382,23 +379,23 @@ function transformComponents(){
         insession = 1;
 
         document.getElementById('betbtn').style.backgroundColor = "grey"
-
-        await fetch("http://localhost:4001/getseconds", {method: 'GET', headers:{'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers':'Content-Type', 'ngrok-skip-browser-warning':'69420'}}).
-            then((response) => response.text()).then((value) => {
-
-                seconds = value;
-            });
         
         document.getElementById("Major_Text").innerHTML = "";
         document.getElementById("piloting").style.width = "0px";
         document.getElementById("piloting").style.height = "0px";
         document.getElementById("loadingBar").style.width = "0px";
 
-        for(let i = 0; i < coordinatesBottom.length; i++){
+        for(let i = 0; i < Math.floor(seconds/1000); i ++ ){
+
             setTimeout(() => {
-                document.getElementById("aeroplanepng").style.left = coordinatesLeft[i];
-                document.getElementById("aeroplanepng").style.bottom = coordinatesBottom[i];
-            }, (Number(seconds)/coordinatesBottom.length) * i);
+                let a = i % 5;
+                document.getElementById("aeroplanepng").style.left = coordinatesLeft[a];
+                document.getElementById("aeroplanepng").style.bottom = coordinatesBottom[a];
+
+                
+            }, i * 1000);
+
+
 
         }
 
@@ -447,7 +444,7 @@ function transformComponents(){
         document.getElementById("aeroplanepng").style.left = "44%";
                     document.getElementById("aeroplanepng").style.bottom = "1%";
 
-        fetch("http://localhost:4000/assets/php files/server.php", {method: 'POST', headers:{'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers':'Content-Type'}, body: JSON.stringify({'intention': 'start again'})}).
+        fetch("https://8bf2-41-75-174-193.ngrok-free.app/assets/php files/server.php", {method: 'POST', headers:{'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers':'Content-Type'}, body: JSON.stringify({'intention': 'start again'})}).
             then((response) => response.text()).then(async (value) => {
                 if(value == "Success"){
                 betplaced = 0;
@@ -459,9 +456,10 @@ function transformComponents(){
 
 
             setTimeout(()=>{
-                console.log("I'm calling getState")
                 getState();
-            }, 5000);
+            }, 4000);
 
-    }, 10000);
+            
+
+    }, Number(seconds) + 7000);
 }

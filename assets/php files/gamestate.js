@@ -12,7 +12,7 @@ http.createServer((req, res) => {
     res.writeHead(200, {'access-control-allow-origin': '*', 'Content-Type': 'application/json', 'access-control-allow-headers':'*'})
 
     if(req.url == "/getseconds"){
-    res.write( ((5000 - number)).toString());
+    res.write( ((28000 - number)).toString());
     res.end()
     }
 
@@ -35,14 +35,15 @@ http.createServer((req, res) => {
 function setState(){
 
     setInterval(() => {
+
+        number = Math.ceil(Math.random() * 28000);
+
         startingtime = new Date().getTime().toString();
-        endingtime = Number(startingtime) + 15000;
+        endingtime = Number(startingtime) + number + 10000;
 
-        number = Math.ceil(Math.random() * 5000);
+        console.log(((28000 - number)/1000) + "secs");
 
-        console.log(((5000 - number)/1000) + "secs");
-
-    }, 15000);
+    }, 4000);
 
     }
 
