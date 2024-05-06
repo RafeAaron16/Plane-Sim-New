@@ -1,10 +1,19 @@
 let x = document.cookie;
 
-if(document.cookie.includes("abuse_interstitial=8bf2-41-75-174-193.ngrok-free.app;")) {x= document.cookie.substring(document.cookie.indexOf(';') + 2)}
+if(document.cookie.includes("abuse_interstitial=5d88-41-75-174-193.ngrok-free.app")) {x= document.cookie.substring(document.cookie.indexOf(';') + 2)}
 console.log(x);
 
+var isphone = 0;
+
+if(window.innerWidth < 400){
+    isphone = 1;
+}
+else{
+    isphone = 0;
+}
+
 function getRemainingMoney(username){
-        fetch('https://8bf2-41-75-174-193.ngrok-free.app/assets/php files/server.php', {method: 'POST', headers:{'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers':'Content-Type'}, body:JSON.stringify({'intention': 'get amount remaining', 'username': x})}).
+        fetch('https://5d88-41-75-174-193.ngrok-free.app/assets/php files/server.php', {method: 'POST', headers:{'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers':'Content-Type'}, body:JSON.stringify({'intention': 'get amount remaining', 'username': x})}).
         then((response) => {
             
             return response.text()}).
@@ -69,7 +78,7 @@ function placeBet(username){
         alert("Insufficient Funds. Balance: " + (document.getElementById('bet').value - Number(document.getElementById('cashRemaining').innerHTML)));
     }
     else{
-    fetch('https://8bf2-41-75-174-193.ngrok-free.app/assets/php files/server.php', {method: 'POST', headers:{'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers':'Content-Type'}, body:JSON.stringify({'betAmount': document.getElementById('bet').value,'intention': 'place bet', 'username': username})}).
+    fetch('https://5d88-41-75-174-193.ngrok-free.app/assets/php files/server.php', {method: 'POST', headers:{'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers':'Content-Type'}, body:JSON.stringify({'betAmount': document.getElementById('bet').value,'intention': 'place bet', 'username': username})}).
     then((response) => {
         
         return response.text()}).
@@ -99,7 +108,7 @@ function reduceRemainingMoney(username){
     if(document.getElementById('bet').value <= 0){
         alert("Please increase bet amount");
     }else{
-    fetch('https://8bf2-41-75-174-193.ngrok-free.app/assets/php files/server.php', {method: 'POST', headers:{'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers':'Content-Type'}, body:JSON.stringify({'betAmount': document.getElementById('bet').value,'intention': 'reduce amount remaining', 'username': username})}).
+    fetch('https://5d88-41-75-174-193.ngrok-free.app/assets/php files/server.php', {method: 'POST', headers:{'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers':'Content-Type'}, body:JSON.stringify({'betAmount': document.getElementById('bet').value,'intention': 'reduce amount remaining', 'username': username})}).
     then((response) => {
         
         return response.text()}).
@@ -120,7 +129,7 @@ function reduceRemainingMoney(username){
 
 function addToRemainingMoney(username){
 
-    fetch('https://8bf2-41-75-174-193.ngrok-free.app/assets/php files/server.php', {method: 'POST', headers:{'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers':'Content-Type'}, body:JSON.stringify({'AmountToAdd': (Number(document.getElementById('cashRemaining').innerHTML) + Number(amountToAdd)).toString(),'intention': 'add to amount remaining', 'username': username})}).
+    fetch('https://5d88-41-75-174-193.ngrok-free.app/assets/php files/server.php', {method: 'POST', headers:{'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers':'Content-Type'}, body:JSON.stringify({'AmountToAdd': (Number(document.getElementById('cashRemaining').innerHTML) + Number(amountToAdd)).toString(),'intention': 'add to amount remaining', 'username': username})}).
     then((response) => {
         
         return response.text()}).
@@ -143,7 +152,7 @@ function addToRemainingMoney(username){
 getRemainingMoney(x);
 
 function getMyBets(username){
-    fetch('https://8bf2-41-75-174-193.ngrok-free.app/assets/php files/server.php', {method: 'POST', headers:{'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers':'Content-Type'}, body:JSON.stringify({'intention': 'retrieve my current bets'})}).
+    fetch('https://5d88-41-75-174-193.ngrok-free.app/assets/php files/server.php', {method: 'POST', headers:{'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers':'Content-Type'}, body:JSON.stringify({'intention': 'retrieve my current bets'})}).
     then((response) => { 
         
         return response.json()}).
@@ -212,7 +221,7 @@ function getMyBets(username){
 }
 
 function getAllBets(){
-    fetch('https://8bf2-41-75-174-193.ngrok-free.app/assets/php files/server.php', {method: 'POST', headers:{'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers':'Content-Type'}, body:JSON.stringify({'intention': 'retrieve current bets'})}).
+    fetch('https://5d88-41-75-174-193.ngrok-free.app/assets/php files/server.php', {method: 'POST', headers:{'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers':'Content-Type'}, body:JSON.stringify({'intention': 'retrieve current bets'})}).
     then((response) => { 
 
         return response.json()}).
@@ -296,18 +305,18 @@ synced = 0;
 baseTime = 0;
 
 async function getState(){
-    await fetch("https://5bf9-41-75-174-193.ngrok-free.app/getStartingTime", {method: 'GET', headers:{'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers':'Content-Type', 'ngrok-skip-browser-warning':'69420'}}).
+    await fetch("https://6db1-41-75-174-193.ngrok-free.app/getStartingTime", {method: 'GET', headers:{'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers':'Content-Type', 'ngrok-skip-browser-warning':'69420'}}).
     then((response) => response.text()).then((value) => {
 
         startingTime = value;
     });
 
-    await fetch("https://5bf9-41-75-174-193.ngrok-free.app/getEndingTime", {method: 'GET', headers:{'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers':'Content-Type', 'ngrok-skip-browser-warning':'69420'}}).
+    await fetch("https://6db1-41-75-174-193.ngrok-free.app/getEndingTime", {method: 'GET', headers:{'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers':'Content-Type', 'ngrok-skip-browser-warning':'69420'}}).
     then((response) => response.text()).then((value) => {
         endingTime = value;
     });
 
-    await fetch("https://5bf9-41-75-174-193.ngrok-free.app/getseconds", {method: 'GET', headers:{'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers':'Content-Type', 'ngrok-skip-browser-warning':'69420'}}).
+    await fetch("https://6db1-41-75-174-193.ngrok-free.app/getseconds", {method: 'GET', headers:{'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers':'Content-Type', 'ngrok-skip-browser-warning':'69420'}}).
     then((response) => response.text()).then((value) => {
 
         seconds = value;
@@ -352,7 +361,7 @@ function startingTimer(){
 
 
 coordinatesBottom = ["1%", "80%", "50%", '70%',  "70%"]
-coordinatesLeft = ["44%", "44%", "75%", "70%", "30%"]
+coordinatesLeft = ["44%", "44%", "25%", "70%", "30%"]
 
 function transformComponents(){
 
@@ -365,8 +374,14 @@ function transformComponents(){
         document.getElementById("Major_Text").innerHTML = "Get ready For Flight";
         document.getElementById("loader").style.width = "0%";
         document.getElementById("loadingBar").style.width = "100%";
+
+        if(isphone == 0){
         document.getElementById("piloting").style.width = "200px";
         document.getElementById("piloting").style.height = "200px";
+        }else{
+            document.getElementById("piloting").style.width = "100px";
+        document.getElementById("piloting").style.height = "100px";
+        }
 
         if(automatic == 1){
             placeBet(x);
@@ -381,6 +396,7 @@ function transformComponents(){
         document.getElementById('betbtn').style.backgroundColor = "grey"
         
         document.getElementById("Major_Text").innerHTML = "";
+
         document.getElementById("piloting").style.width = "0px";
         document.getElementById("piloting").style.height = "0px";
         document.getElementById("loadingBar").style.width = "0px";
@@ -435,8 +451,16 @@ function transformComponents(){
 
         document.getElementById("loadingBar").style.width = "100%";
         document.getElementById("Major_Text").innerHTML = "We Lost The Plane";
+
+        if(isphone == 0){
         document.getElementById("piloting").style.width = "200px";
         document.getElementById("piloting").style.height = "200px";
+        }
+        else{
+            document.getElementById("piloting").style.width = "10px";
+        document.getElementById("piloting").style.height = "10px";
+        }
+
         document.getElementById("loader").style.width = "100%";
 
         document.getElementById("aeroplanepng").style.transition = 'all 0s';
@@ -444,7 +468,7 @@ function transformComponents(){
         document.getElementById("aeroplanepng").style.left = "44%";
                     document.getElementById("aeroplanepng").style.bottom = "1%";
 
-        fetch("https://8bf2-41-75-174-193.ngrok-free.app/assets/php files/server.php", {method: 'POST', headers:{'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers':'Content-Type'}, body: JSON.stringify({'intention': 'start again'})}).
+        fetch("https://5d88-41-75-174-193.ngrok-free.app/assets/php files/server.php", {method: 'POST', headers:{'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers':'Content-Type'}, body: JSON.stringify({'intention': 'start again'})}).
             then((response) => response.text()).then(async (value) => {
                 if(value == "Success"){
                 betplaced = 0;

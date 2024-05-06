@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://8bf2-41-75-174-193.ngrok-free.app/assets/css files/login.css">
+    <link rel="stylesheet" href="https://5d88-41-75-174-193.ngrok-free.app/assets/css files/login.css">
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
     <title>Make an account</title>
 </head>
@@ -23,7 +23,7 @@
                 alert("Incomplete data")
             }else{
 
-            fetch('https://8bf2-41-75-174-193.ngrok-free.app/assets/php files/server.php', {method: 'POST', headers:{'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers':'Content-Type'}, body:JSON.stringify({'intention': 'add user to database', 'username': document.getElementById('user').value, 'amount': document.getElementById('amountToStart').value})}).
+            fetch('https://5d88-41-75-174-193.ngrok-free.app/assets/php files/server.php', {method: 'POST', headers:{'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers':'Content-Type'}, body:JSON.stringify({'intention': 'add user to database', 'username': document.getElementById('user').value, 'amount': document.getElementById('amountToStart').value})}).
             then((response) => {
                 
                 return response.text()}).
@@ -38,7 +38,7 @@
             else if(value == "Failure1"){
                 document.cookie = document.getElementById('user').value
                 alert("Welcome back " + document.getElementById('user').value);
-                window.location="https://8bf2-41-75-174-193.ngrok-free.app/index.html"
+                window.location="https://5d88-41-75-174-193.ngrok-free.app/index.html"
             }
             else{
                 alert("There was an error uploading your data")
