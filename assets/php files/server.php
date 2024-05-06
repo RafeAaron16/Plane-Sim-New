@@ -13,7 +13,7 @@
             header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
 
     if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']))
-        header("Access-Control-Allow-Headers: {$_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']}");
+        header("Access-Control-Allow-Headers: *");
 
         $json = file_get_contents('php://input');
 
@@ -51,8 +51,15 @@
 
             $result = mysqli_query($conn, $sql) or die(mysqli_error());
 
+            $sql2 = "INSERT INTO currentbets values('".$data->username."', ".$data->betAmount.");";
+
+            $result2 = mysqli_query($conn, $sql2) or die(mysqli_error());
+
             if($result){
+
+                if($result2){
                 echo "Success";
+                }
             }
                 
             else{
@@ -79,9 +86,7 @@
                 echo "Success";
             }else{
                 echo "Failure";
-            }
-
-            
+            }            
         }
 
         if($data->intention == "add to amount remaining"){
@@ -175,6 +180,28 @@
             echo "Failure";
         }
     }
+
+    if($data->intention == "add user to database"){
+
+        $sql1 = "SELECT * FROM user WHERE Name ='". $data->username ."';";
+
+        $result1 = mysqli_query($conn, $sql1) or die(mysqli_error());
+
+        if(mysqli_num_rows($result1) > 0){
+            echo "Failure1";
+        }else{
+
+        $sql = "INSERT INTO user(Name, AMOUNT) values('".$data->username ."', ". $data->amount .")";
+
+        $result = mysqli_query($conn, $sql) or die(mysqli_error());
+
+        if($result == true){
+            echo "Success";
+        }else{
+            echo "Failure";
+        }
+    }
+}
 
     
 ?>

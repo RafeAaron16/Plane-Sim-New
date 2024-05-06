@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./assets/css files/login.css">
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+    <title>Make an account</title>
+</head>
+<body>
+    <div class="form">
+        <p class="heading">Create a user/Login</p>
+        <input class="field" id="user" type="text" placeholder="Enter Username"><br>
+        <input class="field" id="amountToStart" type="text" placeholder="Enter Amount to start"><br>
+        <button id="createUser" onclick="makecookie()">Create User</button>
+    </div>
+</body>
+
+<script>
+    function makecookie(){
+
+            if(document.getElementById('user').value == "" || document.getElementById('user').value == ""){
+                alert("Incomplete data")
+            }else{
+
+            fetch('http://localhost:4000/assets/php files/server.php', {method: 'POST', headers:{'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers':'Content-Type'}, body:JSON.stringify({'intention': 'add user to database', 'username': document.getElementById('user').value, 'amount': document.getElementById('amountToStart').value})}).
+            then((response) => {
+                
+                return response.text()}).
+            then((value) => {
+
+                if(value == "Success"){
+                document.cookie = document.getElementById('user').value
+                alert("Account created")
+                window.location="./index.html"
+            }
+
+            else if(value == "Failure1"){
+                document.cookie = document.getElementById('user').value
+                alert("Welcome back " + document.getElementById('user').value);
+                window.location="./index.html"
+            }
+            else{
+                alert("There was an error uploading your data")
+            }
+            })
+        }
+    }
+</script>
+</html>

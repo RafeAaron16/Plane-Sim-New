@@ -1,0 +1,56 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    font-family: 'Poppins';
+    font-weight: 700;
+}
+
+.heading{
+    margin-bottom: 20px;
+    font-size: 14px;
+    color: rgb(255, 255, 255);
+}
+
+.form{
+    border: 2px solid black;
+    padding: 80px 60px;
+    border-radius: 5px;
+    background-color: blueviolet;
+}
+
+body{
+    background-color: rgba(10, 10, 133, 0.685);
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+}
+
+.field{
+    border: none;
+    background-color: whitesmoke;
+    width: 200px;
+    height: 40px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: 2px solid rgb(131, 131, 131);
+    padding-left: 10px;
+    font-size: 17px;
+}
+
+#createUser{
+    border: 1px solid black;
+    width: 100px;
+    height: 30px;
+    border-radius: 3px;
+    background-color: rgb(95, 189, 1);
+    font-size: 14px;
+    color: white;
+}
+
+#createUser:hover{
+    background-color: rgb(64, 128, 0);
+    cursor: pointer;
+}
